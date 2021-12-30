@@ -20,6 +20,19 @@ const ContainerCenter = styled.div`
 class App extends React.Component {
   state = initialData;
 
+  componentDidUpdate() {
+    let result = [];
+    Object.keys(this.state.columns).map((x) => {
+      const tasks = this.state.tasks;
+      this.state.columns[x].taskIds.map((y) => {
+        tasks[y].menuId = x;
+        const t = tasks[y];
+        result.push(t);
+      });
+    });
+    console.log(result);
+  }
+
   onDragEnd = (result) => {
     const { destination, source, draggableId } = result;
 
@@ -83,7 +96,7 @@ class App extends React.Component {
       },
     };
     this.setState(newState);
-    console.log('newState', newState);
+    // console.log('newState', newState);
   };
 
   render() {
@@ -96,7 +109,7 @@ class App extends React.Component {
               const tasks = column.taskIds.map(
                 (taskId) => this.state.tasks[taskId],
               );
-              console.log('tasks', tasks);
+              // console.log('tasks', tasks);
 
               return <Column key={column.id} column={column} tasks={tasks} />;
             })}
